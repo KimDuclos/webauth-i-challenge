@@ -23,13 +23,10 @@ server.post("/api/register", (req, res) => {
         res.status(201).json(user);
       })
       .catch(err => {
-        res
-          .status(500)
-          .json({ message: "There was a problem saving this user!" });
+        res.status(500).json({ errorMessage: "User could not be saved." });
       });
   } else {
-    res.status(401).json({
-      message: "Please provide a username and a password for this user!"
+    res.status(401).json({errorMessage: "Please provide a username and a password for this user."
     });
   }
 });
@@ -40,19 +37,17 @@ server.post("/api/login", (req, res) => {
     db.getUserByName({ username })
       .then(user => {
         if (bcrypt.compareSync(password, user.password)) {
-          res.status(200).json({ message: "LOGGED IN" });
+          res.status(200).json({ message: "You are now logged in." });
           next();
         } else {
-          res.status(401).json({ message: "Invalid username or password!" });
+          res.status(401).json({ message: "Invalid username or password." });
         }
       })
       .catch(err => {
-        res.status(500).json({ message: "There was a problem logging in!" });
+        res.status(500).json({ message: "Could not log in." });
       });
   } else {
-    res
-      .status(401)
-      .json({ message: "Please provide a username and password to login!" });
+    res.status(401).json({ message: "Please provide a username and password to login." });
   }
 });
 
@@ -62,9 +57,7 @@ server.get("/api/users", restricted, (req, res) => {
       res.status(200).json(users);
     })
     .catch(err => {
-      res
-        .status(500)
-        .json({ message: "There was a problem retrieving users!" });
+      res.status(500).json({ message: "Could not retrieve users." });
     });
 });
 
@@ -80,12 +73,12 @@ function restricted(req, res, next) {
         }
       })
       .catch(err => {
-        res.status(500).json({ message: "There was a problem logging in!" });
+        res.status(500).json({ message: "Could not log in." });
       });
   } else {
     res
       .status(401)
-      .json({ message: "Please provide a username and password to login!" });
+      .json({ message: "Please provide a username and password to login." });
   }
 }
 
