@@ -23,10 +23,17 @@ server.post("/api/register", (req, res) => {
         res.status(201).json(user);
       })
       .catch(err => {
+<<<<<<< HEAD
         res.status(500).json({ message: "User could not be saved." });
       });
   } else {
     res.status(401).json({ message: "Please provide a username and a password for this user."
+=======
+        res.status(500).json({ errorMessage: "User could not be saved." });
+      });
+  } else {
+    res.status(401).json({errorMessage: "Please provide a username and a password for this user."
+>>>>>>> 9dcb363f9047cf602636ffe5ff4c1e4af0950d53
     });
   }
 });
